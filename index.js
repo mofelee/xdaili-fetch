@@ -10,7 +10,7 @@ const Xfetch = (f, opts) => (...args) => {
   orderno = orderno || process.env.XDAILI_ORDERNO;
   secret = secret || process.env.XDAILI_SECRET;
   if(!orderno || !secret){
-    throw new Error('must supply orderno and secret')
+    throw new Error('must supply orderno and secret');
   }
 
   const timestamp = parseInt(new Date().getTime()/1000);
@@ -22,18 +22,18 @@ const Xfetch = (f, opts) => (...args) => {
     .toUpperCase();
 
 
-  args[1] = args[1] || {}
+  args[1] = args[1] || {};
   args[1].headers = {
     ...args[1].headers,
-    'Proxy-Authorization': 'sign='+sign+'&orderno='+orderno+"&timestamp="+timestamp
-  }
+    'Proxy-Authorization': 'sign='+sign+'&orderno='+orderno+'&timestamp='+timestamp
+  };
 
   args[1] = {
     ...args[1],
     agent: new HttpProxyAgent('http://forward.xdaili.cn:80')
-  }
+  };
 
-  return f(...args)
-}
+  return f(...args);
+};
 
 module.exports = Xfetch;
